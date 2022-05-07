@@ -21,7 +21,7 @@ const loadFormData = key => {
     const formData = localStorage.getItem(key);
     return formData === null ? undefined : JSON.parse(formData);
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
@@ -44,10 +44,22 @@ const handleSubmit = event => {
   refs.form.reset();
 };
 
+const loadDataFromStorage = () => {
+  const userData = loadFormData(LOCALSTORAGE_KEY);
+
+  if (userData === undefined) {
+    console.log('Заповніть форму');
+  } else {
+    refs.form.elements.email.value = userData.email;
+    refs.form.elements.message.value = userData.message;
+  }
+};
+
+loadDataFromStorage();
 refs.form.addEventListener('input', handleInput);
 refs.form.addEventListener(
   'submit',
-  _.throttle(userData => {
-    handleSubmit(userData);
+  _.throttle(event => {
+    handleSubmit(event);
   }, 500),
 );
