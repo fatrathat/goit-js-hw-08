@@ -37,7 +37,12 @@ const handleInput = event => {
 // Подія відправки
 const handleSubmit = event => {
   event.preventDefault();
+  const userEmail = event.currentTarget.elements.email.value;
+  const userMessage = event.currentTarget.elements.message.value;
 
+  if (userEmail === '' || userMessage === '') {
+    return alert('Всі поля повинні бути заповнені!');
+  }
   console.log(loadFormData(LOCALSTORAGE_KEY));
 
   localStorage.removeItem(LOCALSTORAGE_KEY);
